@@ -79,7 +79,6 @@ app.route("/test")
   }}
 })
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, function() {
-  console.log(`Server started on port ${PORT}`);
+app.listen(process.env.PORT || 3000, function() {
+  console.log(`Server started on port 3000`);
 });
