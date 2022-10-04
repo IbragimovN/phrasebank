@@ -4,6 +4,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require('mongoose');
 var random = require('mongoose-simple-random');
+const PORT = process.env.PORT || 3000;
 
 const app = express();
 
@@ -80,6 +81,6 @@ app.route("/test")
 })
 
 
-app.listen(process.env.PORT || 3000, function() {
-  console.log("Server started on port 3000");
+app.listen(PORT, function() {
+  console.log(`Server started on port ${PORT}`);
 });
