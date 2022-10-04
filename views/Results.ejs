@@ -1,0 +1,15 @@
+<%- include("header") -%>
+
+<div>
+  <h1> Well done Nurbek ! </h1>
+</div>
+
+<div class="box" id="heading">
+  <h2>Your results:</h2>
+</div>
+<% result.forEach(function(item){ %>
+    <div> <%= item.phrase %>  </div>
+    <div> <%= item.meaning %> </div>
+    <div> <%= item.answer %> </div>
+<% }) %>
+<%- include("footer") -%>

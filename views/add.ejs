@@ -1,0 +1,12 @@
+<%- include("header") -%>
+<div>
+    <h1>New phrase</h1>
+</div>
+<div>
+    <form action="/add" method="POST">
+        <input type="text" placeholder="Phrase that you want to add" name="phrase">
+        <textarea placeholder="Meaning of this phrase" cols="70" rows="5" name="meaning"></textarea>
+        <button type="submit">Add phrase</button>
+    </form>
+</div>
+<%- include("footer") -%> 
