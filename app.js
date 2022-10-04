@@ -3,6 +3,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require('mongoose');
+const dotenv = require('dotenv')
 var random = require('mongoose-simple-random');
 
 const app = express();
