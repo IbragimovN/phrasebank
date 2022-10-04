@@ -3,7 +3,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require('mongoose');
-const dotenv = require('dotenv')
 var random = require('mongoose-simple-random');
 
 const app = express();
@@ -24,7 +23,7 @@ phraseSchema.plugin(random);
 
 const Sample = mongoose.model("Sample", phraseSchema);
 const Phrase = mongoose.model("phrase", phraseSchema);
-var process = 1;
+var progress = 1;
 var questionsArr = [];
 
 app.route('/')
@@ -58,16 +57,16 @@ app.route("/test")
     if (!err) {
       randomData = results[random];
       question = randomData.phrase;
-      res.render("test", {randomQuest: question, results, process})
+      res.render("test", {randomQuest: question, results, progress})
     }
   });
 })
 .post(function(req,res){
   var selectedAnswer = req.body.button;
-  process++;
-  if(process > 10){
+  progress++;
+  if(progress > 10){
     res.render("Results", {result: questionsArr});
-    process = 1;
+    progress = 1;
     } else {
   if(selectedAnswer === randomData.meaning){ // If answer is true
     randomData.answer = "Answer is true";
