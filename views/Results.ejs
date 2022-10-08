@@ -7,9 +7,9 @@
 <div class="box" id="heading">
   <h2>Your results:</h2>
 </div>
-<% result.forEach(function(item){ %>
-    <div> <%= item.phrase %>  </div>
-    <div> <%= item.meaning %> </div>
-    <div> <%= item.answer %> </div>
-<% }) %>
+<% result.forEach(function(item, index){ %>
+    <div> <%= index + 1 %>)<%= item.phrase %>  </div>
+    <div> <%= item.selected %> </div>
+    <div class="ans_<%= item.answer %>"> Choosed answer is <%= item.answer %> </div>
+    <% })%>
 <%- include("footer") -%>

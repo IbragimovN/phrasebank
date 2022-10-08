@@ -120,6 +120,14 @@ input[type="text"] {
   width: 35vw;
 }
 
+.ans_true{
+  color: green;
+}
+
+.ans_wrong{
+  color: red;
+}
+
 form{
   font-size: large;
   line-height: 3rem;

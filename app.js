@@ -61,22 +61,28 @@ app.route("/test")
     }
   });
 })
-.post(function(req,res){
+.post(async function(req,res){
   var selectedAnswer = req.body.button;
-  progress++;
-  if(progress > 10){
-    res.render("Results", {result: questionsArr});
-    progress = 1;
-    } else {
-  if(selectedAnswer === randomData.meaning){ // If answer is true
-    randomData.answer = "Answer is true";
-    questionsArr.push(randomData);
-    res.redirect("/test")
-  } else if(selectedAnswer !== randomData.meaning){ //If answer is wrong
-    randomData.answer = "Answer is wrong";
-    questionsArr.push(randomData);
-    res.redirect("/test")
-  }}
+    if(selectedAnswer === randomData.meaning){ // If answer is true
+      randomData.answer = "true";
+      randomData.selected = selectedAnswer;
+      questionsArr.push(randomData);
+      if (progress === 10) {
+        res.render("Results", {result: questionsArr});
+        progress = 1;
+        questionsArr = [];
+      } else {res.redirect("/test")}
+    } else if(selectedAnswer !== randomData.meaning){ //If answer is wrong
+      randomData.answer = "wrong";
+      randomData.selected = selectedAnswer;
+      questionsArr.push(randomData);
+      if (progress === 10) {
+        res.render("Results", {result: questionsArr});
+        progress = 1;
+        questionsArr = [];
+      } else {res.redirect("/test")}
+    };
+    progress++;
 })
 
 let port = process.env.PORT;
@@ -85,5 +91,5 @@ if (port == null || port == "") {
 }
 
 app.listen(port, function() {
-  console.log(`Server started on port 3000`);
+  console.log(`Server started on port ${port}`);
 });
