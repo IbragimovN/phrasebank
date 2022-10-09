@@ -17,7 +17,8 @@ app.use(express.static("public"));
 mongoose.connect('mongodb+srv://ibragimovnd:7143316zN@cluster0.hrflc9n.mongodb.net/phraseDB', {useNewUrlParser: true});
 const phraseSchema = mongoose.Schema({
   phrase: String,
-  meaning: String
+  meaning: String,
+  reputation: { type: Number, default: 0 }
 });
 phraseSchema.plugin(random);
 
@@ -38,7 +39,7 @@ app.route('/add')
 .post(function(req,res){
   const newPhrase = new Phrase({
     phrase: req.body.phrase,
-    meaning: req.body.meaning
+    meaning: req.body.meaning,
   });
   newPhrase.save()
   console.log('New Document has been saved');
@@ -55,7 +56,7 @@ app.route("/test")
 
   Phrase.findRandom({}, {}, {limit: 4}, function(err, results) {
     if (!err) {
-      randomData = results[random];
+      randomData = JSON.parse(JSON.stringify(results[random]));
       question = randomData.phrase;
       res.render("test", {randomQuest: question, results, progress})
     }
@@ -65,19 +66,33 @@ app.route("/test")
   var selectedAnswer = req.body.button;
     if(selectedAnswer === randomData.meaning){ // If answer is true
       randomData.answer = "true";
+      Phrase.findOneAndUpdate({ _id: randomData._id }, { $inc: { reputation: 1 } }, {new: true },function(err, response) {
+        if (err) {
+        console.log(err);
+       }});
       randomData.selected = selectedAnswer;
       questionsArr.push(randomData);
       if (progress === 10) {
-        res.render("Results", {result: questionsArr});
+        let sumOfAns = questionsArr.filter((el) => {
+          return Object.values(el).some((val) =>
+            String(val).toLowerCase().includes("true"))})
+        res.render("Results", {result: questionsArr, sumOfAns});
         progress = 1;
         questionsArr = [];
       } else {res.redirect("/test")}
     } else if(selectedAnswer !== randomData.meaning){ //If answer is wrong
       randomData.answer = "wrong";
+      Phrase.findOneAndUpdate({ _id: randomData._id }, { $inc: { reputation: -1 } }, {new: true },function(err, response) {
+        if (err) {
+        console.log(err);
+       }});
       randomData.selected = selectedAnswer;
       questionsArr.push(randomData);
       if (progress === 10) {
-        res.render("Results", {result: questionsArr});
+        let sumOfAns = questionsArr.filter((el) => {
+          return Object.values(el).some((val) =>
+            String(val).toLowerCase().includes("true"))})
+        res.render("Results", {result: questionsArr, sumOfAns});
         progress = 1;
         questionsArr = [];
       } else {res.redirect("/test")}
