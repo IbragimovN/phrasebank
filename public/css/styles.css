@@ -1,7 +1,53 @@
-html {
-  background-color: #E4E9FD;
-  min-height: 1000px;
-  font-family: 'helvetica neue';
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@400;500;700&display=swap');
+
+* {
+  margin: 0 0.5rem;
+  box-sizing: border-box;
+  font-family: 'Dosis', sans-serif, Arial, Helvetica;
+
+}
+
+a {
+  text-decoration: none;
+}
+
+body {
+  background-color: #F4EBD9;
+  min-height: 95vh;
+}
+
+#header {
+  position: relative;
+  height: 3rem;
+  background-color: #058ED9;
+  display: block;
+}
+
+nav{
+
+}
+
+.ul-nav{
+  position: absolute;
+  right: 10%;
+  list-style: none;
+}
+
+.li-nav{
+  font-size: 1.5rem;
+  line-height: 3rem;
+  display: inline-block;
+  font-weight: 500;
+  color: #fff;
+}
+
+.li-nav a{
+  color: #fff;
+}
+
+.li-nav:hover, .li-nav a:hover  {
+  background-color: #fff;
+  color: #000;
 }
 
 h1 {
@@ -9,7 +55,13 @@ h1 {
   color: #000;
   padding: 10px;
 }
+
+#header-text{
+  padding-top: 3rem;
+}
+
 h2, h2 a {
+  font-weight: 500;
   color: #fff;
   text-decoration: none;
   padding: 7px;
@@ -23,8 +75,13 @@ h2, h2 a {
   box-shadow: 5px 5px 15px -5px rgba(0, 0, 0, 0.3);
 }
 
-#heading {
-  background-color: #A683E3;
+#heading{
+  margin-top: 1rem;
+  background-color: #058ED9;
+}
+
+#question {
+  background-color: #058ED9;
   text-align: center;
 }
 
@@ -41,7 +98,7 @@ h2, h2 a {
 
 input:checked+p {
   text-decoration: line-through;
-  text-decoration-color: #A683E3;
+  text-decoration-color: 058ED9;
 }
 
 input[type="checkbox"] {
@@ -52,19 +109,19 @@ textarea{
   margin: 20px 0;
   top: 10px;
   background: transparent;
-  border: solid #A683E3;
+  border: solid #058ED9;
   font-size: 20px;
   font-weight: 200;
   outline: none;
 }
-
+/* 
 p {
   margin: 0;
   padding: 20px;
   font-size: 20px;
   font-weight: 200;
-  color: #00204a;
-}
+  color: #058ED9;
+} */
 
 form {
   display: block;
@@ -79,7 +136,7 @@ button {
   width: 150px;
   border-radius: 10%;
   border-color: transparent;
-  background-color: #A683E3;
+  background-color: #058ED9;
   color: #fff;
   font-size: 20px;
   padding-bottom: 6px;
@@ -99,7 +156,7 @@ input[type="text"] {
   font-weight: 200;
   width: 80vw;
   outline: none;
-  box-shadow: inset 0 -3px 0 0 #A683E3;
+  box-shadow: inset 0 -3px 0 0 #058ED9;
 }
 
 
@@ -113,11 +170,14 @@ input[type="text"] {
 
 }
 .answer{
-  background-color: #A683E3;
-  margin: 3rem;
+  background-color: #058ED9;
+  margin: 1.5rem;
   border-radius: 0%;
   height: 3rem;
   width: 35vw;
+}
+.answer:hover{
+  background-color: #FF731D;
 }
 
 .ans_true{
@@ -128,11 +188,30 @@ input[type="text"] {
   color: red;
 }
 
+.negative{
+  color: red;
+}
+
+.positive{
+  color: green;
+}
+
 form{
   font-size: large;
   line-height: 3rem;
   text-align: center;
   display: inline-block;
+}
+
+.results{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  font-size: 1.3rem;
+}
+.result-info{
+  margin: 1rem;
+  width: 40%;
 }
 
 footer {

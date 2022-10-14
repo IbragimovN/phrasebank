@@ -2,8 +2,9 @@
 <div>
     <h1>Test room. Process <%= progress %>/10</h1>
 </div>
-<div class="box" id="heading">
-    <h2><%= randomQuest %></h1>
+<div class="box" id="question">
+    <h2><%= randomQuest %> <span class="quest 
+        <%= reputation>0 ? 'positive' : 'negative' %> ">(<%= reputation %> )</span></h2>
 </div>
 <div class="answerBlock">
     <% results.forEach(function(item){  %>

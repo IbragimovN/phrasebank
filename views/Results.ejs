@@ -7,9 +7,14 @@
 <div class="box" id="heading">
   <h2>Your results: <%= sumOfAns.length %> / 10</h2>
 </div>
-<% result.forEach(function(item, index){ %>
-    <div> <%= index + 1 %>)<%= item.phrase %>  </div>
-    <div> <%= item.selected %> </div>
-    <div class="ans_<%= item.answer %>"> Choosed answer is <%= item.answer %> </div>
-    <% })%>
+<div class="results">
+  <% result.forEach(function(item, index){ %>
+  <div class="result-info"> 
+    <p> <%= index + 1 %>) <%= item.phrase %> </p>  
+    <p> <%= item.selected %> </p> 
+    <p class="ans_<%= item.answer %>"> Choosed answer is <%= item.answer %> </p> 
+  </div>
+  <% })%>
+</div>
+
 <%- include("footer") -%>
