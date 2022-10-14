@@ -58,7 +58,7 @@ app.route("/test")
 
   Phrase.findRandom({}, {}, {limit: 4}, function(err, results) {
     if (!err) {
-      let randomData = JSON.parse(JSON.stringify(results[random]));
+      randomData = JSON.parse(JSON.stringify(results[random]));
       question = randomData.phrase;
       reputation = randomData.reputation;
       res.render("test", {randomQuest: question, reputation, results, progress})

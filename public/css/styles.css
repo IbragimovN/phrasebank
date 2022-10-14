@@ -132,7 +132,7 @@ form {
 button {
   display: block;
   margin: 0 auto;
-  min-height: 40px;
+  min-height: 50px;
   width: 150px;
   border-radius: 10%;
   border-color: transparent;
@@ -173,7 +173,6 @@ input[type="text"] {
   background-color: #058ED9;
   margin: 1.5rem;
   border-radius: 0%;
-  height: 3rem;
   width: 35vw;
 }
 .answer:hover{
