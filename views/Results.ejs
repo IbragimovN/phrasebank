@@ -1,7 +1,7 @@
 <%- include("header") -%>
 
 <div>
-  <h1> Well done Nurbek ! </h1>
+  <h1>Well done Nurbek !</h1>
 </div>
 
 <div class="box" id="heading">
@@ -9,10 +9,10 @@
 </div>
 <div class="results">
   <% result.forEach(function(item, index){ %>
-  <div class="result-info"> 
-    <p> <%= index + 1 %>) <%= item.phrase %> </p>  
-    <p> <%= item.selected %> </p> 
-    <p class="ans_<%= item.answer %>"> Choosed answer is <%= item.answer %> </p> 
+  <div class="result-info">
+    <p><%= index + 1 %>) <%= item.krphrase %></p>
+    <p><%= item.selected %></p>
+    <p class="ans_<%= item.answer %>">Choosed answer is <%= item.answer %></p>
   </div>
   <% })%>
 </div>
