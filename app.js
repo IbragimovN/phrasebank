@@ -16,15 +16,15 @@ mongoose.connect(
   "mongodb+srv://ibragimovnd:7143316zN@cluster0.hrflc9n.mongodb.net/phraseDB",
   { useNewUrlParser: true }
 );
-const krphraseSchema = mongoose.Schema({
+const phraseSchema = mongoose.Schema({
   phrase: String,
   meaning: String,
   reputation: { type: Number, default: 0 },
 });
-krphraseSchema.plugin(random);
+phraseSchema.plugin(random);
 
-const Sample = mongoose.model("Sample", krphraseSchema);
-const Krphrase = mongoose.model("krphrase", krphraseSchema);
+const Sample = mongoose.model("Sample", phraseSchema);
+const Phrase = mongoose.model("phrase", phraseSchema);
 var progress = 1;
 var questionsArr = [];
 function reset() {
@@ -40,14 +40,39 @@ app
     res.render("add");
   })
   .post(function (req, res) {
-    const newKrphrase = new Krphrase({
-      phrase: req.body.krphrase,
+    const newPhrase = new Phrase({
+      phrase: req.body.phrase,
       meaning: req.body.meaning,
     });
-    newKrphrase.save();
+    newPhrase.save();
     console.log("New Document has been saved");
     res.redirect("/add");
   });
+
+app
+  .route("/dictionary")
+  .get(function (req, res) {
+    Phrase.find({}, {}, { sort: { _id: -1 }, limit: 50 }, function (err, d_result) {
+      const dictions = JSON.parse(JSON.stringify(d_result));
+      res.render("dictionary", { dictions });
+    });
+  }); 
+  
+  app.route('/:phrase_id/delete')
+    .get(function(req, res, next) {
+    console.log(req.params.phrase_id);
+    Phrase.deleteOne({ _id: req.params.phrase_id }, function(err,data) {
+      if (!err) {
+          console.log(data);
+
+          console.log("Phrase has been deleted")
+      }
+      else {
+              console.log("error")
+      }
+  });
+  res.redirect("/dictionary");
+  })  ;
 
 app
   .route("/test")
@@ -56,7 +81,7 @@ app
     var random = Math.floor(Math.random() * 4);
     var question;
 
-    Krphrase.findRandom({}, {}, { limit: 4 }, function (err, results) {
+    Phrase.findRandom({}, {}, { limit: 4 }, function (err, results) {
       if (!err) {
         randomData = JSON.parse(JSON.stringify(results[random]));
         question = randomData.phrase;
@@ -75,7 +100,7 @@ app
     if (selectedAnswer === randomData.meaning) {
       // If answer is true
       randomData.answer = "true";
-      Krphrase.findOneAndUpdate(
+      Phrase.findOneAndUpdate(
         { _id: randomData._id },
         { $inc: { reputation: 1 } },
         { new: true },
@@ -90,7 +115,7 @@ app
     } else if (selectedAnswer !== randomData.meaning) {
       //If answer is wrong
       randomData.answer = "wrong";
-      Krphrase.findOneAndUpdate(
+      Phrase.findOneAndUpdate(
         { _id: randomData._id },
         { $inc: { reputation: -1 } },
         { new: true },
