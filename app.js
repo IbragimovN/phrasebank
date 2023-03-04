@@ -30,6 +30,7 @@ var questionsArr = [];
 function reset() {
   progress = 1;
 }
+var phraseAmount;
 app.route("/").get(function (req, res) {
   res.render("list", { functs: reset() });
 });
@@ -49,30 +50,37 @@ app
     res.redirect("/add");
   });
 
-app
-  .route("/dictionary")
-  .get(function (req, res) {
-    Phrase.find({}, {}, { sort: { _id: -1 }, limit: 50 }, function (err, d_result) {
-      const dictions = JSON.parse(JSON.stringify(d_result));
-      res.render("dictionary", { dictions });
-    });
-  }); 
-  
-  app.route('/:phrase_id/delete')
-    .get(function(req, res, next) {
-    console.log(req.params.phrase_id);
-    Phrase.deleteOne({ _id: req.params.phrase_id }, function(err,data) {
-      if (!err) {
-          console.log(data);
+app.route("/dictionary/:dic_page").get(function (req, res) {
+  let page = req.params.dic_page;
+  Phrase.count({}, function (err, count) {
+    phraseAmount = count;
+  });
+  Phrase.find(
+    {},
+    {},
+    { sort: { _id: -1 }, limit: page * 50 },
+    function (err, d_result) {
+      const dictions = JSON.parse(JSON.stringify(d_result)).slice(
+        (page - 1) * 50
+      );
+      res.render("dictionary", { dictions, Amount: phraseAmount });
+    }
+  );
+});
 
-          console.log("Phrase has been deleted")
-      }
-      else {
-              console.log("error")
-      }
+app.route("/:phrase_id/delete").get(function (req, res, next) {
+  console.log(req.params.phrase_id);
+  Phrase.deleteOne({ _id: req.params.phrase_id }, function (err, data) {
+    if (!err) {
+      console.log(data);
+
+      console.log("Phrase has been deleted");
+    } else {
+      console.log("error");
+    }
   });
   res.redirect("/dictionary");
-  })  ;
+});
 
 app
   .route("/test")
