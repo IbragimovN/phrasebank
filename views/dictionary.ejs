@@ -33,6 +33,6 @@
 </table>
 <div>
   <% for( let ind = 0; ind < (Amount / 50); ind++ ) { %>
-  <a href="/dictionary/<%= ind+1 %>"><%= ind+1 %></a> %> <% } %>
+  <a href="/dictionary/?page=<%= ind+1 %>"><%= ind+1 %></a> %> <% } %>
 </div>
 <%- include("footer") -%>

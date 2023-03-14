@@ -1,6 +1,7 @@
 //jshint esversion:6
 
 const express = require("express");
+
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 var random = require("mongoose-simple-random");
@@ -50,8 +51,9 @@ app
     res.redirect("/add");
   });
 
-app.route("/dictionary/:dic_page").get(function (req, res) {
-  let page = req.params.dic_page;
+app.route("/dictionary").get(function (req, res) {
+  let page = req.query.page;
+  console.log(page)
   Phrase.count({}, function (err, count) {
     phraseAmount = count;
   });
