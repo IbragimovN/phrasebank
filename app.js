@@ -52,8 +52,7 @@ app
   });
 
 app.route("/dictionary").get(function (req, res) {
-  let page = req.query.page;
-  console.log(page)
+  var page = req.query.page;
   Phrase.count({}, function (err, count) {
     phraseAmount = count;
   });
@@ -65,7 +64,7 @@ app.route("/dictionary").get(function (req, res) {
       const dictions = JSON.parse(JSON.stringify(d_result)).slice(
         (page - 1) * 50
       );
-      res.render("dictionary", { dictions, Amount: phraseAmount });
+      res.render("dictionary", { dictions, Amount: phraseAmount, page });
     }
   );
 });
@@ -75,13 +74,11 @@ app.route("/:phrase_id/delete").get(function (req, res, next) {
   Phrase.deleteOne({ _id: req.params.phrase_id }, function (err, data) {
     if (!err) {
       console.log(data);
-
-      console.log("Phrase has been deleted");
     } else {
       console.log("error");
     }
   });
-  res.redirect("/dictionary");
+  res.redirect("back");
 });
 
 app
