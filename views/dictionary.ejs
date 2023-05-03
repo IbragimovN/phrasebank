@@ -21,7 +21,7 @@
       <td class="td_order"><% if (page > 1){ %> <%= ((page-1)*50) + (index + 1) %> <% } else{ %>
         <%= index + 1 %> <% } %>
       </td>
-      <td><%= item.phrase %></td>
+      <td><%= item.phrasalVerb %></td>
       <td class="td_point <%= item.reputation>0 ? 'positive' : 'negative' %>"><%= item.reputation %></td>
       <td><%= item.meaning %></td>
       <td class="td_option">

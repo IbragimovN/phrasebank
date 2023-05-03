@@ -17,15 +17,15 @@ mongoose.connect(
   "mongodb+srv://ibragimovnd:7143316zN@cluster0.hrflc9n.mongodb.net/phraseDB",
   { useNewUrlParser: true }
 );
-const phraseSchema = mongoose.Schema({
-  phrase: String,
+const phrasalvSchema = mongoose.Schema({
+  phrasalVerb: String,
   meaning: String,
   reputation: { type: Number, default: 0 },
 });
-phraseSchema.plugin(random);
+phrasalvSchema.plugin(random);
 
-const Sample = mongoose.model("Sample", phraseSchema);
-const Phrase = mongoose.model("phrase", phraseSchema);
+const Sample = mongoose.model("Sample", phrasalvSchema);
+const PhrasalVerb = mongoose.model("phrasalVerb", phrasalvSchema);
 var progress = 1;
 var questionsArr = [];
 function reset() {
@@ -42,21 +42,21 @@ app
     res.render("add");
   })
   .post(function (req, res) {
-    const newPhrase = new Phrase({
-      phrase: req.body.phrase,
+    const newPhrasalVerb = new PhrasalVerb({
+      phrasalVerb: req.body.phrasalVerb,
       meaning: req.body.meaning,
     });
-    newPhrase.save();
+    newPhrasalVerb.save();
     console.log("New Document has been saved");
     res.redirect("/add");
   });
 
 app.route("/dictionary").get(function (req, res) {
   var page = req.query.page;
-  Phrase.count({}, function (err, count) {
+  PhrasalVerb.count({}, function (err, count) {
     phraseAmount = count;
   });
-  Phrase.find(
+  PhrasalVerb.find(
     {},
     {},
     { sort: { _id: -1 }, limit: page * 50 },
@@ -71,7 +71,7 @@ app.route("/dictionary").get(function (req, res) {
 
 app.route("/:phrase_id/delete").get(function (req, res, next) {
   console.log(req.params.phrase_id);
-  Phrase.deleteOne({ _id: req.params.phrase_id }, function (err, data) {
+  PhrasalVerb.deleteOne({ _id: req.params.phrase_id }, function (err, data) {
     if (!err) {
       console.log(data);
     } else {
@@ -88,10 +88,10 @@ app
     var random = Math.floor(Math.random() * 4);
     var question;
 
-    Phrase.findRandom({}, {}, { limit: 4 }, function (err, results) {
+    PhrasalVerb.findRandom({}, {}, { limit: 4 }, function (err, results) {
       if (!err) {
         randomData = JSON.parse(JSON.stringify(results[random]));
-        question = randomData.phrase;
+        question = randomData.phrasalVerb;
         reputation = randomData.reputation;
         res.render("test", {
           randomQuest: question,
@@ -107,7 +107,7 @@ app
     if (selectedAnswer === randomData.meaning) {
       // If answer is true
       randomData.answer = "true";
-      Phrase.findOneAndUpdate(
+      PhrasalVerb.findOneAndUpdate(
         { _id: randomData._id },
         { $inc: { reputation: 1 } },
         { new: true },
@@ -122,7 +122,7 @@ app
     } else if (selectedAnswer !== randomData.meaning) {
       //If answer is wrong
       randomData.answer = "wrong";
-      Phrase.findOneAndUpdate(
+      PhrasalVerb.findOneAndUpdate(
         { _id: randomData._id },
         { $inc: { reputation: -1 } },
         { new: true },
